@@ -263,9 +263,6 @@
             <a href="{{ route('why-custom-premium-boxes') }}" class="px-4 py-2 text-dark hover:text-primary transition-colors duration-300 font-medium {{ request()->routeIs('why-custom-premium-boxes') ? 'text-primary' : '' }}">
                 Why Custom Premium Boxes
             </a>
-            <a href="{{ route('why-custom-premium-boxes') }}" class="px-4 py-2 text-dark hover:text-primary transition-colors duration-300 font-medium {{ request()->routeIs('why-custom-premium-boxes') ? 'text-primary' : '' }}">
-                Why Custom Premium Boxes
-            </a>
             <a href="{{ route('about') }}" class="px-4 py-2 text-dark hover:text-primary transition-colors duration-300 font-medium {{ request()->routeIs('about') ? 'text-primary' : '' }}">
                 About
             </a>
