@@ -1,0 +1,165 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    /* Typography */
+    --font-sans: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+    --font-display: 'Bebas Neue', ui-sans-serif, system-ui, sans-serif;
+
+    /* Custom Colors */
+    --color-primary: #CA1D1F;
+    --color-primary-dark: #A31618;
+    --color-primary-light: #E8383A;
+    --color-dark: #000000;
+    --color-dark-soft: #1A1A1A;
+    --color-dark-muted: #2D2D2D;
+    --color-light: #FFFFFF;
+    --color-light-soft: #F5F5F5;
+    --color-light-muted: #E0E0E0;
+
+    /* Spacing */
+    --spacing-section: 6rem;
+
+    /* Animations */
+    --animate-fade-in: fade-in 0.6s ease-out forwards;
+    --animate-slide-up: slide-up 0.6s ease-out forwards;
+    --animate-slide-left: slide-left 0.6s ease-out forwards;
+    --animate-slide-right: slide-right 0.6s ease-out forwards;
+    --animate-scale-in: scale-in 0.4s ease-out forwards;
+    --animate-float: float 3s ease-in-out infinite;
+    --animate-pulse-subtle: pulse-subtle 2s ease-in-out infinite;
+    --animate-rotate-slow: rotate-slow 20s linear infinite;
+    --animate-draw-line: draw-line 1.5s ease-out forwards;
+}
+
+/* Keyframes */
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slide-up {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-left {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slide-right {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scale-in {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-subtle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+@keyframes rotate-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes draw-line {
+    from { stroke-dashoffset: 1000; }
+    to { stroke-dashoffset: 0; }
+}
+
+/* Custom Utility Classes */
+.text-balance {
+    text-wrap: balance;
+}
+
+.animation-delay-100 { animation-delay: 0.1s; }
+.animation-delay-200 { animation-delay: 0.2s; }
+.animation-delay-300 { animation-delay: 0.3s; }
+.animation-delay-400 { animation-delay: 0.4s; }
+.animation-delay-500 { animation-delay: 0.5s; }
+.animation-delay-600 { animation-delay: 0.6s; }
+.animation-delay-700 { animation-delay: 0.7s; }
+.animation-delay-800 { animation-delay: 0.8s; }
+
+/* SVG Animation Classes */
+.svg-draw {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: draw-line 1.5s ease-out forwards;
+}
+
+.svg-draw-delayed {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: draw-line 1.5s ease-out 0.3s forwards;
+}
+
+/* Scroll Animation Classes */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Custom Button Styles */
+.btn-primary {
+    @apply inline-flex items-center justify-center px-6 py-2.5 bg-primary text-light font-semibold rounded-lg
+           transition-all duration-300 hover:bg-primary-dark hover:scale-[1.02]
+           focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+}
+
+.btn-outline {
+    @apply inline-flex items-center justify-center px-8 py-4 border-2 border-dark text-dark font-semibold
+           transition-all duration-300 hover:bg-dark hover:text-light hover:scale-105
+           focus:outline-none focus:ring-2 focus:ring-dark focus:ring-offset-2;
+}
+
+.btn-outline-light {
+    @apply inline-flex items-center justify-center px-8 py-4 border-2 border-light text-light font-semibold
+           transition-all duration-300 hover:bg-light hover:text-dark hover:scale-105
+           focus:outline-none focus:ring-2 focus:ring-light focus:ring-offset-2 focus:ring-offset-dark;
+}
+
+/* Card Hover Effect */
+.card-hover {
+    @apply transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl;
+}
+
+/* Custom Selection */
+::selection {
+    background-color: #CA1D1F;
+    color: #FFFFFF;
+}
+
+    /* Smooth Scrolling */
+    html {
+        scroll-behavior: smooth;
+    }
+
+    /* Dropdown Responsive Positioning */
+    @media (max-width: 1024px) {
+        .group:hover .absolute {
+            left: 0 !important;
+            right: auto !important;
+        }
+    }
