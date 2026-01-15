@@ -13,22 +13,45 @@
     RewriteCond %{HTTP:x-xsrf-token} .
     RewriteRule .* - [E=HTTP_X_XSRF_TOKEN:%{HTTP:X-XSRF-Token}]
 
-    # Allow direct access to build assets (Vite compiled assets)
+    # SEO Protection: Block access to public/index.php and public/.htaccess
+    # This prevents duplicate content issues and ensures only root index.php is accessible
+    RewriteCond %{REQUEST_URI} ^/public/(index\.php|\.htaccess)$
+    RewriteRule ^(.*)$ - [F,L]
+
+    # Block any attempt to access public/index.php with query strings
+    RewriteCond %{QUERY_STRING} .*
+    RewriteCond %{REQUEST_URI} ^/public/index\.php
+    RewriteRule ^(.*)$ - [F,L]
+
+    # Serve static assets directly from public directory
+    # Handle Vite build assets
     RewriteCond %{REQUEST_URI} ^/build/(.*)$
     RewriteCond %{DOCUMENT_ROOT}/public/build/$1 -f
     RewriteRule ^build/(.*)$ public/build/$1 [L]
 
-    # Check if requested file exists in public directory and serve it directly
+    # Handle storage files (uploaded files)
+    RewriteCond %{REQUEST_URI} ^/storage/(.*)$
+    RewriteCond %{DOCUMENT_ROOT}/public/storage/$1 -f
+    RewriteRule ^storage/(.*)$ public/storage/$1 [L]
+
+    # Handle all other static files (CSS, JS, images, fonts, etc.)
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} \.(css|js|jpg|jpeg|png|gif|svg|ico|woff|woff2|ttf|eot|webp|pdf|json|xml|txt)$ [NC]
     RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -f
     RewriteRule ^(.*)$ public/$1 [L]
 
-    # Check if requested directory exists in public and serve index file
+    # Handle directories in public (like fonts/, css/, js/, etc.)
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -d
+    RewriteCond %{REQUEST_URI} ^/(build|storage|css|js|fonts|images|aeesets|favicon\.ico|robots\.txt) [NC]
     RewriteRule ^(.*)$ public/$1/ [L]
+
+    # Handle favicon and robots.txt
+    RewriteCond %{REQUEST_URI} ^/(favicon\.ico|robots\.txt)$
+    RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -f
+    RewriteRule ^(.*)$ public/$1 [L]
 
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
@@ -40,3 +63,6 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+
+
+

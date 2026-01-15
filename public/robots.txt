@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /public/index.php
+Disallow: /public/.htaccess
 
 Sitemap: /sitemap.xml
