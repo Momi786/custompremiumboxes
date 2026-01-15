@@ -28,7 +28,15 @@
     <link rel="canonical" href="{{ url()->current() }}">
 
     {{-- Favicon --}}
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    @php
+        $favicon = \App\Models\Settings::get('favicon');
+        $hasFavicon = $favicon && file_exists(storage_path('app/public/' . $favicon));
+    @endphp
+    @if($hasFavicon)
+        <link rel="icon" type="image/x-icon" href="{{ asset('storage/' . $favicon) }}">
+    @else
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    @endif
 
     {{-- Fonts --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">

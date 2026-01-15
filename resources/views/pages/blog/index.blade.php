@@ -1,7 +1,12 @@
 @extends('layouts.app')
 
-@section('title', $title ?? 'Blog - Custom Premium Boxes')
-@section('meta_description', $metaDescription ?? 'Read our latest blog posts about custom packaging.')
+@php
+    $metaTitle = $title ?? \App\Models\Settings::get('blog_meta_title') ?: 'Blog - Custom Premium Boxes';
+    $metaDesc = $metaDescription ?? \App\Models\Settings::get('blog_meta_description') ?: 'Read our latest blog posts about custom packaging.';
+@endphp
+
+@section('title', $metaTitle)
+@section('meta_description', $metaDesc)
 @section('meta_keywords', $metaKeywords ?? 'blog, custom packaging, packaging tips')
 
 @section('content')

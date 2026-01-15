@@ -1,7 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Why Custom Premium Boxes - Benefits of Custom Packaging')
-@section('meta_description', 'Discover why custom premium boxes are essential for your business. Learn about brand impact, customer experience, and the advantages of custom packaging solutions.')
+@php
+    $metaTitle = \App\Models\Settings::get('why_custom_premium_boxes_meta_title') ?: 'Why Custom Premium Boxes - Benefits of Custom Packaging';
+    $metaDescription = \App\Models\Settings::get('why_custom_premium_boxes_meta_description') ?: 'Discover why custom premium boxes are essential for your business. Learn about brand impact, customer experience, and the advantages of custom packaging solutions.';
+@endphp
+
+@section('title', $metaTitle)
+@section('meta_description', $metaDescription)
 @section('meta_keywords', 'why custom boxes, custom packaging benefits, premium packaging advantages, branded boxes, custom packaging importance')
 
 @php

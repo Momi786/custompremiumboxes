@@ -1,7 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Custom Premium Boxes - Premium Custom Packaging Solutions')
-@section('meta_description', 'Create stunning custom packaging that elevates your brand. Premium mailer boxes, rigid boxes, bakery boxes & more. Fast turnaround, competitive pricing.')
+@php
+    $metaTitle = \App\Models\Settings::get('home_meta_title') ?: 'Custom Premium Boxes - Premium Custom Packaging Solutions';
+    $metaDescription = \App\Models\Settings::get('home_meta_description') ?: 'Create stunning custom packaging that elevates your brand. Premium mailer boxes, rigid boxes, bakery boxes & more. Fast turnaround, competitive pricing.';
+@endphp
+
+@section('title', $metaTitle)
+@section('meta_description', $metaDescription)
 @section('meta_keywords', 'custom packaging, custom boxes, mailer boxes, rigid boxes, bakery boxes, chocolate boxes, premium packaging, branded packaging')
 
 @section('content')

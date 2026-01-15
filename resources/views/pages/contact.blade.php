@@ -1,7 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Contact Us - Custom Premium Boxes')
-@section('meta_description', 'Get in touch with Custom Premium Boxes for a free quote on custom packaging. Contact our team for questions about mailer boxes, rigid boxes, and more.')
+@php
+    $metaTitle = \App\Models\Settings::get('contact_meta_title') ?: 'Contact Us - Custom Premium Boxes';
+    $metaDescription = \App\Models\Settings::get('contact_meta_description') ?: 'Get in touch with Custom Premium Boxes for a free quote on custom packaging. Contact our team for questions about mailer boxes, rigid boxes, and more.';
+@endphp
+
+@section('title', $metaTitle)
+@section('meta_description', $metaDescription)
 @section('meta_keywords', 'contact custom premium boxes, packaging quote, custom boxes quote, packaging inquiry')
 
 @php

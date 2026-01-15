@@ -1,7 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'About Us - Custom Premium Boxes')
-@section('meta_description', 'Learn about Custom Premium Boxes - your trusted partner for premium custom packaging solutions. Quality, innovation, and customer satisfaction since 2010.')
+@php
+    $metaTitle = \App\Models\Settings::get('about_meta_title') ?: 'About Us - Custom Premium Boxes';
+    $metaDescription = \App\Models\Settings::get('about_meta_description') ?: 'Learn about Custom Premium Boxes - your trusted partner for premium custom packaging solutions. Quality, innovation, and customer satisfaction since 2010.';
+@endphp
+
+@section('title', $metaTitle)
+@section('meta_description', $metaDescription)
 @section('meta_keywords', 'about custom premium boxes, packaging company, custom packaging manufacturer, box printing company')
 
 @php

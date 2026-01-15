@@ -31,15 +31,30 @@
             {{-- Brand Column --}}
             <div class="col-span-2 md:col-span-3 lg:col-span-1">
                 <a href="{{ route('home') }}" class="flex items-center space-x-3 mb-6">
-                    <svg class="w-10 h-10 text-primary" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="8" y="16" width="32" height="24" stroke="currentColor" stroke-width="2" fill="none"/>
-                        <path d="M8 16L24 8L40 16" stroke="currentColor" stroke-width="2" fill="none"/>
-                        <line x1="24" y1="8" x2="24" y2="16" stroke="currentColor" stroke-width="2"/>
-                    </svg>
+                    @php
+                        $footerLogo = \App\Models\Settings::get('footer_logo');
+                        $hasFooterLogo = $footerLogo && file_exists(storage_path('app/public/' . $footerLogo));
+                    @endphp
+                    @if($hasFooterLogo)
+                        <img src="{{ asset('storage/' . $footerLogo) }}" alt="Custom Premium Boxes" class="h-16 w-auto" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <svg class="w-16 h-16 text-primary hidden" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="8" y="16" width="32" height="24" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M8 16L24 8L40 16" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <line x1="24" y1="8" x2="24" y2="16" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    @else
+                        <svg class="w-16 h-16 text-primary" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="8" y="16" width="32" height="24" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M8 16L24 8L40 16" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <line x1="24" y1="8" x2="24" y2="16" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    @endif
+                    @unless($hasFooterLogo)
                     <div class="flex flex-col">
                         <span class="font-display text-xl text-light tracking-wider">CUSTOM PREMIUM</span>
                         <span class="text-primary text-xs tracking-[0.3em] font-medium -mt-1">BOXES</span>
                     </div>
+                    @endunless
                 </a>
                 <p class="text-light-muted leading-relaxed mb-6 text-sm">
                     You only have one chance to make a first impression. Let's make it an amazing one with premium custom packaging.

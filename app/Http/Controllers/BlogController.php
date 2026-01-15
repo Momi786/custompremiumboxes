@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BlogCategory;
 use App\Models\BlogPost;
+use App\Models\Settings;
 use Illuminate\Support\Str;
 
 class BlogController extends Controller
@@ -27,8 +28,8 @@ class BlogController extends Controller
         return view('pages.blog.index', [
             'posts' => $posts,
             'categories' => $categories,
-            'title' => 'Blog - Custom Premium Boxes',
-            'metaDescription' => 'Read our latest blog posts about custom packaging, industry insights, and premium box solutions.',
+            'title' => Settings::get('blog_meta_title') ?: 'Blog - Custom Premium Boxes',
+            'metaDescription' => Settings::get('blog_meta_description') ?: 'Read our latest blog posts about custom packaging, industry insights, and premium box solutions.',
             'metaKeywords' => 'blog, custom packaging, packaging tips, box design, packaging industry',
             'breadcrumbs' => [
                 ['label' => 'Home', 'url' => route('home')],

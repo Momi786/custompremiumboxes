@@ -62,7 +62,7 @@ class BlogPost extends Model
      */
     public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(BlogCategory::class)
+        return $this->belongsToMany(BlogCategory::class, 'blog_post_category')
             ->withPivot('sort_order')
             ->withTimestamps()
             ->orderByPivot('sort_order');

@@ -47,16 +47,32 @@
         <div class="flex items-center justify-between h-24 py-3">
             {{-- Logo --}}
             <a href="{{ route('home') }}" class="flex items-center space-x-3 group flex-shrink-0" aria-label="Custom Premium Boxes Home">
-                <svg class="w-14 h-14 text-primary transition-transform duration-300 group-hover:scale-110" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="8" y="16" width="32" height="24" stroke="currentColor" stroke-width="2" fill="none" class="svg-draw"/>
-                    <path d="M8 16L24 8L40 16" stroke="currentColor" stroke-width="2" fill="none" class="svg-draw-delayed"/>
-                    <line x1="24" y1="8" x2="24" y2="16" stroke="currentColor" stroke-width="2" class="svg-draw-delayed"/>
-                    <rect x="12" y="20" width="24" height="16" fill="currentColor" opacity="0.2"/>
-                </svg>
+                @php
+                    $navigationLogo = \App\Models\Settings::get('navigation_logo');
+                    $hasLogo = $navigationLogo && file_exists(storage_path('app/public/' . $navigationLogo));
+                @endphp
+                @if($hasLogo)
+                    <img src="{{ asset('storage/' . $navigationLogo) }}" alt="Custom Premium Boxes" class="h-20 w-auto transition-transform duration-300 group-hover:scale-110" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <svg class="w-20 h-20 text-primary transition-transform duration-300 group-hover:scale-110 hidden" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="8" y="16" width="32" height="24" stroke="currentColor" stroke-width="2" fill="none" class="svg-draw"/>
+                        <path d="M8 16L24 8L40 16" stroke="currentColor" stroke-width="2" fill="none" class="svg-draw-delayed"/>
+                        <line x1="24" y1="8" x2="24" y2="16" stroke="currentColor" stroke-width="2" class="svg-draw-delayed"/>
+                        <rect x="12" y="20" width="24" height="16" fill="currentColor" opacity="0.2"/>
+                    </svg>
+                @else
+                    <svg class="w-20 h-20 text-primary transition-transform duration-300 group-hover:scale-110" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="8" y="16" width="32" height="24" stroke="currentColor" stroke-width="2" fill="none" class="svg-draw"/>
+                        <path d="M8 16L24 8L40 16" stroke="currentColor" stroke-width="2" fill="none" class="svg-draw-delayed"/>
+                        <line x1="24" y1="8" x2="24" y2="16" stroke="currentColor" stroke-width="2" class="svg-draw-delayed"/>
+                        <rect x="12" y="20" width="24" height="16" fill="currentColor" opacity="0.2"/>
+                    </svg>
+                @endif
+                @unless($hasLogo)
                 <div class="flex flex-col leading-tight">
                     <span class="font-display text-2xl sm:text-3xl text-dark tracking-wider font-bold">CUSTOM PREMIUM</span>
                     <span class="text-dark text-xs sm:text-sm tracking-wider font-normal mt-0.5">BOXES</span>
                 </div>
+                @endunless
             </a>
 
             {{-- Search Bar (Desktop) --}}
@@ -282,16 +298,32 @@
             <div class="flex items-center justify-between px-4 sm:px-6 py-4">
                 {{-- Logo --}}
                 <a href="{{ route('home') }}" class="flex items-center space-x-3" id="mobile-menu-logo-link">
-                    <svg class="w-12 h-12 text-primary" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="8" y="16" width="32" height="24" stroke="currentColor" stroke-width="2" fill="none"/>
-                        <path d="M8 16L24 8L40 16" stroke="currentColor" stroke-width="2" fill="none"/>
-                        <line x1="24" y1="8" x2="24" y2="16" stroke="currentColor" stroke-width="2"/>
-                        <rect x="12" y="20" width="24" height="16" fill="currentColor" opacity="0.2"/>
-                    </svg>
+                    @php
+                        $navigationLogo = \App\Models\Settings::get('navigation_logo');
+                        $hasLogo = $navigationLogo && file_exists(storage_path('app/public/' . $navigationLogo));
+                    @endphp
+                    @if($hasLogo)
+                        <img src="{{ asset('storage/' . $navigationLogo) }}" alt="Custom Premium Boxes" class="h-16 w-auto" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <svg class="w-16 h-16 text-primary hidden" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="8" y="16" width="32" height="24" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M8 16L24 8L40 16" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <line x1="24" y1="8" x2="24" y2="16" stroke="currentColor" stroke-width="2"/>
+                            <rect x="12" y="20" width="24" height="16" fill="currentColor" opacity="0.2"/>
+                        </svg>
+                    @else
+                        <svg class="w-16 h-16 text-primary" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="8" y="16" width="32" height="24" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M8 16L24 8L40 16" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <line x1="24" y1="8" x2="24" y2="16" stroke="currentColor" stroke-width="2"/>
+                            <rect x="12" y="20" width="24" height="16" fill="currentColor" opacity="0.2"/>
+                        </svg>
+                    @endif
+                    @unless($hasLogo)
                     <div class="flex flex-col leading-tight">
                         <span class="font-display text-xl text-dark tracking-wider font-bold">CUSTOM PREMIUM</span>
                         <span class="text-dark text-xs tracking-wider font-normal mt-0.5">BOXES</span>
                     </div>
+                    @endunless
                 </a>
 
                 {{-- Close Button --}}
