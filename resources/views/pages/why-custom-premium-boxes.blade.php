@@ -4,6 +4,13 @@
 @section('meta_description', 'Discover why custom premium boxes are essential for your business. Learn about brand impact, customer experience, and the advantages of custom packaging solutions.')
 @section('meta_keywords', 'why custom boxes, custom packaging benefits, premium packaging advantages, branded boxes, custom packaging importance')
 
+@php
+$breadcrumbs = [
+    ['label' => 'Home', 'url' => route('home')],
+    ['label' => 'Why Custom Premium Boxes', 'url' => route('why-custom-premium-boxes')],
+];
+@endphp
+
 @section('content')
     {{-- Hero Section --}}
     <section class="relative py-20 bg-gradient-to-br from-dark via-dark-soft to-dark overflow-hidden">

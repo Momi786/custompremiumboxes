@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
@@ -23,6 +23,10 @@ class ProductController extends Controller
             'title' => 'All Products - Custom Premium Boxes',
             'metaDescription' => 'Browse all our custom packaging products. Premium quality boxes for every business need.',
             'metaKeywords' => 'custom boxes, packaging products, custom packaging, premium boxes',
+            'breadcrumbs' => [
+                ['label' => 'Home', 'url' => route('home')],
+                ['label' => 'Products', 'url' => route('products.index')],
+            ],
         ]);
     }
 
@@ -42,6 +46,11 @@ class ProductController extends Controller
             'title' => 'Featured Products - Custom Premium Boxes',
             'metaDescription' => 'Discover our featured custom packaging products. Premium quality boxes handpicked for excellence.',
             'metaKeywords' => 'featured products, best custom boxes, premium packaging, top boxes',
+            'breadcrumbs' => [
+                ['label' => 'Home', 'url' => route('home')],
+                ['label' => 'Products', 'url' => route('products.index')],
+                ['label' => 'Featured', 'url' => route('products.featured')],
+            ],
         ]);
     }
 
@@ -66,12 +75,25 @@ class ProductController extends Controller
             ->get();
 
         // SEO Meta
-        $title = $product->meta_title ?: $product->name . ' - Custom Premium Boxes';
-        $metaDescription = $product->meta_description ?: 
+        $title = $product->meta_title ?: $product->name.' - Custom Premium Boxes';
+        $metaDescription = $product->meta_description ?:
             Str::limit($product->short_description ?? $product->description ?? '', 155);
-        $metaKeywords = $product->meta_keywords ?: 
-            strtolower($product->name) . ', custom boxes, packaging, ' . 
+        $metaKeywords = $product->meta_keywords ?:
+            strtolower($product->name).', custom boxes, packaging, '.
             $product->categories->pluck('name')->implode(', ');
+
+        $breadcrumbs = [
+            ['label' => 'Home', 'url' => route('home')],
+            ['label' => 'Products', 'url' => route('products.index')],
+        ];
+
+        // Add category breadcrumb if product has categories
+        if ($product->categories->isNotEmpty()) {
+            $firstCategory = $product->categories->first();
+            $breadcrumbs[] = ['label' => $firstCategory->name, 'url' => route('categories.show', $firstCategory->slug)];
+        }
+
+        $breadcrumbs[] = ['label' => $product->name, 'url' => route('products.show', $product->slug)];
 
         return view('pages.products.show', [
             'product' => $product,
@@ -79,6 +101,7 @@ class ProductController extends Controller
             'title' => $title,
             'metaDescription' => $metaDescription,
             'metaKeywords' => $metaKeywords,
+            'breadcrumbs' => $breadcrumbs,
         ]);
     }
 }

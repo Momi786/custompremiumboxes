@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Models\Product;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class CategoryController extends Controller
@@ -24,6 +22,10 @@ class CategoryController extends Controller
             'title' => 'All Categories - Custom Premium Boxes',
             'metaDescription' => 'Browse all our custom packaging categories. Find the perfect box solution for your business needs.',
             'metaKeywords' => 'custom boxes, packaging categories, box types, custom packaging',
+            'breadcrumbs' => [
+                ['label' => 'Home', 'url' => route('home')],
+                ['label' => 'Categories', 'url' => route('categories.index')],
+            ],
         ]);
     }
 
@@ -42,11 +44,11 @@ class CategoryController extends Controller
             ->firstOrFail();
 
         // SEO Meta
-        $title = $category->meta_title ?: $category->name . ' - Custom Premium Boxes';
-        $metaDescription = $category->meta_description ?: 
-            'Browse ' . $category->name . ' products. ' . Str::limit($category->description ?? '', 120);
-        $metaKeywords = $category->meta_keywords ?: 
-            strtolower($category->name) . ', custom boxes, packaging, ' . $category->name . ' boxes';
+        $title = $category->meta_title ?: $category->name.' - Custom Premium Boxes';
+        $metaDescription = $category->meta_description ?:
+            'Browse '.$category->name.' products. '.Str::limit($category->description ?? '', 120);
+        $metaKeywords = $category->meta_keywords ?:
+            strtolower($category->name).', custom boxes, packaging, '.$category->name.' boxes';
 
         return view('pages.categories.show', [
             'category' => $category,
@@ -54,6 +56,11 @@ class CategoryController extends Controller
             'title' => $title,
             'metaDescription' => $metaDescription,
             'metaKeywords' => $metaKeywords,
+            'breadcrumbs' => [
+                ['label' => 'Home', 'url' => route('home')],
+                ['label' => 'Categories', 'url' => route('categories.index')],
+                ['label' => $category->name, 'url' => route('categories.show', $category->slug)],
+            ],
         ]);
     }
 }

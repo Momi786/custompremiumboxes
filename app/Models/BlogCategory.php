@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-class Category extends Model
+class BlogCategory extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -52,11 +52,11 @@ class Category extends Model
     }
 
     /**
-     * Get the products that belong to this category.
+     * Get the blog posts that belong to this category.
      */
-    public function products(): BelongsToMany
+    public function blogPosts(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class)
+        return $this->belongsToMany(BlogPost::class)
             ->withPivot('sort_order')
             ->withTimestamps()
             ->orderByPivot('sort_order');

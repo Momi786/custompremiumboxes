@@ -1,4 +1,4 @@
-@extends('layouts.product')
+@extends('layouts.app')
 
 @section('title', $title ?? $product->name . ' - Custom Premium Boxes')
 @section('meta_description', $metaDescription ?? Str::limit($product->short_description ?? $product->description ?? '', 155))
@@ -11,8 +11,8 @@
     "@@type": "Product",
     "name": "{{ $product->name }}",
     "description": "{{ $product->short_description ?? $product->description ?? '' }}",
-    @if($product->image)
-    "image": "{{ asset('storage/' . $product->image) }}",
+    @if($product->image_url)
+    "image": "{{ $product->image_url }}",
     @endif
     @if($product->price)
     "offers": {
@@ -37,20 +37,13 @@
             <div class="absolute top-0 right-0 w-96 h-96 bg-primary rounded-full blur-3xl"></div>
         </div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <nav class="flex items-center gap-2 text-light-muted text-sm mb-8">
-                <a href="{{ route('home') }}" class="hover:text-primary transition-colors">Home</a>
-                <span>/</span>
-                <a href="{{ route('products.index') }}" class="hover:text-primary transition-colors">Products</a>
-                <span>/</span>
-                <span class="text-light">{{ $product->name }}</span>
-            </nav>
             
             <div class="grid lg:grid-cols-2 gap-12 items-start">
                 {{-- Product Image --}}
                 <div class="relative">
-                    @if($product->image)
+                    @if($product->image_url)
                     <div class="aspect-square bg-dark-soft rounded-lg overflow-hidden mb-4">
-                        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover" id="main-image">
+                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-full h-full object-cover" id="main-image">
                     </div>
                     @endif
                     
@@ -58,8 +51,11 @@
                     @if($product->gallery && count($product->gallery) > 0)
                     <div class="grid grid-cols-4 gap-4">
                         @foreach($product->gallery as $image)
-                        <button onclick="changeImage('{{ asset('storage/' . $image) }}')" class="aspect-square bg-dark-soft rounded-lg overflow-hidden border-2 border-transparent hover:border-primary transition-colors">
-                            <img src="{{ asset('storage/' . $image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                        @php
+                            $galleryImageUrl = filter_var($image, FILTER_VALIDATE_URL) ? $image : \Illuminate\Support\Facades\Storage::disk('public')->url($image);
+                        @endphp
+                        <button onclick="changeImage('{{ $galleryImageUrl }}')" class="aspect-square bg-dark-soft rounded-lg overflow-hidden border-2 border-transparent hover:border-primary transition-colors">
+                            <img src="{{ $galleryImageUrl }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
                         </button>
                         @endforeach
                     </div>
@@ -152,9 +148,9 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach($relatedProducts as $index => $relatedProduct)
                 <a href="{{ route('products.show', $relatedProduct->slug) }}" class="group bg-light border-2 border-light-muted hover:border-primary transition-all duration-300 card-hover reveal animation-delay-{{ ($index % 3) * 100 }}">
-                    @if($relatedProduct->image)
+                    @if($relatedProduct->image_url)
                     <div class="w-full h-48 bg-light-soft overflow-hidden">
-                        <img src="{{ asset('storage/' . $relatedProduct->image) }}" alt="{{ $relatedProduct->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                        <img src="{{ $relatedProduct->image_url }}" alt="{{ $relatedProduct->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
                     </div>
                     @endif
                     <div class="p-6">

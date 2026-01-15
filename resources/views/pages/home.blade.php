@@ -106,20 +106,60 @@
     </section>
 
     {{-- Trusted Brands Section --}}
-    <section id="trusted" class="py-12 bg-light border-b border-light-muted">
+    @if(isset($trustedBrands) && $trustedBrands->count() > 0)
+    <section id="trusted" class="py-12 bg-light border-b border-light-muted overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-8">
                 <span class="text-dark-muted text-sm tracking-widest uppercase">Trusted by Global Brands to Small Businesses</span>
             </div>
-            <div class="flex flex-wrap justify-center items-center gap-12 opacity-60">
-                @for($i = 1; $i <= 6; $i++)
-                <div class="w-24 h-12 bg-dark-muted/20 flex items-center justify-center text-dark-muted font-display text-lg tracking-wider">
-                    BRAND {{ $i }}
+            
+            {{-- Slider Container --}}
+            <div class="relative">
+                <div class="brand-slider-container overflow-hidden">
+                    <div class="brand-slider-track flex items-center gap-8 md:gap-12 lg:gap-16">
+                        {{-- First set of brands --}}
+                        @foreach($trustedBrands as $brand)
+                        <div class="brand-slide flex-shrink-0 flex items-center justify-center">
+                            @if($brand->website_url)
+                            <a href="{{ $brand->website_url }}" target="_blank" rel="noopener noreferrer" class="brand-logo-link group">
+                            @endif
+                                <div class="brand-logo-wrapper h-16 md:h-20 flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity duration-300">
+                                    @if($brand->logo_url)
+                                    <img src="{{ $brand->logo_url }}" alt="{{ $brand->name }}" class="max-h-full max-w-[150px] md:max-w-[200px] object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300">
+                                    @else
+                                    <span class="text-dark-muted font-display text-lg tracking-wider">{{ $brand->name }}</span>
+                                    @endif
+                                </div>
+                            @if($brand->website_url)
+                            </a>
+                            @endif
+                        </div>
+                        @endforeach
+                        
+                        {{-- Duplicate set for seamless loop --}}
+                        @foreach($trustedBrands as $brand)
+                        <div class="brand-slide flex-shrink-0 flex items-center justify-center">
+                            @if($brand->website_url)
+                            <a href="{{ $brand->website_url }}" target="_blank" rel="noopener noreferrer" class="brand-logo-link group">
+                            @endif
+                                <div class="brand-logo-wrapper h-16 md:h-20 flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity duration-300">
+                                    @if($brand->logo_url)
+                                    <img src="{{ $brand->logo_url }}" alt="{{ $brand->name }}" class="max-h-full max-w-[150px] md:max-w-[200px] object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300">
+                                    @else
+                                    <span class="text-dark-muted font-display text-lg tracking-wider">{{ $brand->name }}</span>
+                                    @endif
+                                </div>
+                            @if($brand->website_url)
+                            </a>
+                            @endif
+                        </div>
+                        @endforeach
+                    </div>
                 </div>
-                @endfor
             </div>
         </div>
     </section>
+    @endif
 
     {{-- Features Strip --}}
     <section class="py-16 bg-dark">

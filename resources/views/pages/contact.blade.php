@@ -4,6 +4,13 @@
 @section('meta_description', 'Get in touch with Custom Premium Boxes for a free quote on custom packaging. Contact our team for questions about mailer boxes, rigid boxes, and more.')
 @section('meta_keywords', 'contact custom premium boxes, packaging quote, custom boxes quote, packaging inquiry')
 
+@php
+$breadcrumbs = [
+    ['label' => 'Home', 'url' => route('home')],
+    ['label' => 'Contact', 'url' => route('contact')],
+];
+@endphp
+
 @section('content')
     {{-- Hero Section --}}
     <section class="bg-dark py-20 lg:py-24 relative overflow-hidden">

@@ -16,7 +16,7 @@
             <div class="flex items-center justify-between h-9 text-xs">
                 {{-- Top Links --}}
                 <div class="hidden md:flex items-center gap-3 text-dark-muted">
-                    <a href="#" class="hover:text-primary transition-colors font-medium">BLOG</a>
+                    <a href="{{ route('blog.index') }}" class="hover:text-primary transition-colors font-medium">BLOG</a>
                     <span class="text-light-muted text-xs">|</span>
                     <a href="{{ route('contact') }}" class="hover:text-primary transition-colors font-medium">CONTACT US</a>
                     <span class="text-light-muted text-xs">|</span>
@@ -266,6 +266,9 @@
             <a href="{{ route('about') }}" class="px-4 py-2 text-dark hover:text-primary transition-colors duration-300 font-medium {{ request()->routeIs('about') ? 'text-primary' : '' }}">
                 About
             </a>
+            <a href="{{ route('blog.index') }}" class="px-4 py-2 text-dark hover:text-primary transition-colors duration-300 font-medium {{ request()->routeIs('blog.*') ? 'text-primary' : '' }}">
+                Blog
+            </a>
             <a href="{{ route('contact') }}" class="px-4 py-2 text-dark hover:text-primary transition-colors duration-300 font-medium {{ request()->routeIs('contact') ? 'text-primary' : '' }}">
                 Contact
             </a>
@@ -350,6 +353,7 @@
 
                 <a href="{{ route('why-custom-premium-boxes') }}" class="px-4 py-3 text-dark hover:text-primary hover:bg-light-soft transition-colors duration-200 font-medium rounded-lg mt-2 {{ request()->routeIs('why-custom-premium-boxes') ? 'text-primary bg-light-soft' : '' }}">Why Custom Premium Boxes</a>
                 <a href="{{ route('about') }}" class="px-4 py-3 text-dark hover:text-primary hover:bg-light-soft transition-colors duration-200 font-medium rounded-lg {{ request()->routeIs('about') ? 'text-primary bg-light-soft' : '' }}">About</a>
+                <a href="{{ route('blog.index') }}" class="px-4 py-3 text-dark hover:text-primary hover:bg-light-soft transition-colors duration-200 font-medium rounded-lg {{ request()->routeIs('blog.*') ? 'text-primary bg-light-soft' : '' }}">Blog</a>
                 <a href="{{ route('contact') }}" class="px-4 py-3 text-dark hover:text-primary hover:bg-light-soft transition-colors duration-200 font-medium rounded-lg {{ request()->routeIs('contact') ? 'text-primary bg-light-soft' : '' }}">Contact</a>
 
                 <div class="px-4 pt-6 pb-4">

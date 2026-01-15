@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
@@ -30,9 +31,16 @@ Route::get('/', function () {
         ->limit(6)
         ->get();
 
+    // Get trusted brands for slider
+    $trustedBrands = \App\Models\TrustedBrand::where('is_active', true)
+        ->orderBy('sort_order')
+        ->orderBy('name')
+        ->get();
+
     return view('pages.home', [
         'featuredCategories' => $featuredCategories,
         'featuredProducts' => $featuredProducts,
+        'trustedBrands' => $trustedBrands,
     ]);
 })->name('home');
 
@@ -64,6 +72,13 @@ Route::prefix('products')->name('products.')->group(function () {
     Route::get('/{slug}', [ProductController::class, 'show'])->name('show');
 });
 
+// Blog Routes
+Route::prefix('blog')->name('blog.')->group(function () {
+    Route::get('/', [BlogController::class, 'index'])->name('index');
+    Route::get('/category/{slug}', [BlogController::class, 'category'])->name('category');
+    Route::get('/{slug}', [BlogController::class, 'show'])->name('show');
+});
+
 // Legacy product routes (for backward compatibility - redirect to new dynamic routes)
 Route::prefix('products')->group(function () {
     Route::get('/mailer-boxes', function () {
@@ -71,46 +86,52 @@ Route::prefix('products')->group(function () {
         if ($product) {
             return redirect()->route('products.show', $product->slug, 301);
         }
+
         return redirect()->route('products.index', 301);
     });
-    
+
     Route::get('/tuck-top-boxes', function () {
         $product = \App\Models\Product::where('slug', 'tuck-top-boxes')->first();
         if ($product) {
             return redirect()->route('products.show', $product->slug, 301);
         }
+
         return redirect()->route('products.index', 301);
     });
-    
+
     Route::get('/reverse-tuck-boxes', function () {
         $product = \App\Models\Product::where('slug', 'reverse-tuck-boxes')->first();
         if ($product) {
             return redirect()->route('products.show', $product->slug, 301);
         }
+
         return redirect()->route('products.index', 301);
     });
-    
+
     Route::get('/bakery-boxes', function () {
         $product = \App\Models\Product::where('slug', 'bakery-boxes')->first();
         if ($product) {
             return redirect()->route('products.show', $product->slug, 301);
         }
+
         return redirect()->route('products.index', 301);
     });
-    
+
     Route::get('/rigid-boxes', function () {
         $product = \App\Models\Product::where('slug', 'rigid-boxes')->first();
         if ($product) {
             return redirect()->route('products.show', $product->slug, 301);
         }
+
         return redirect()->route('products.index', 301);
     });
-    
+
     Route::get('/chocolate-boxes', function () {
         $product = \App\Models\Product::where('slug', 'chocolate-boxes')->first();
         if ($product) {
             return redirect()->route('products.show', $product->slug, 301);
         }
+
         return redirect()->route('products.index', 301);
     });
 });
@@ -144,6 +165,33 @@ Route::get('/sitemap.xml', function () {
             'url' => route('products.show', $product->slug),
             'priority' => '0.9',
             'changefreq' => 'weekly',
+        ];
+    }
+
+    // Add blog index
+    $pages[] = [
+        'url' => route('blog.index'),
+        'priority' => '0.8',
+        'changefreq' => 'weekly',
+    ];
+
+    // Add all active blog categories
+    $blogCategories = \App\Models\BlogCategory::where('is_active', true)->get();
+    foreach ($blogCategories as $category) {
+        $pages[] = [
+            'url' => route('blog.category', $category->slug),
+            'priority' => '0.7',
+            'changefreq' => 'weekly',
+        ];
+    }
+
+    // Add all published blog posts
+    $blogPosts = \App\Models\BlogPost::published()->get();
+    foreach ($blogPosts as $post) {
+        $pages[] = [
+            'url' => route('blog.show', $post->slug),
+            'priority' => '0.8',
+            'changefreq' => 'monthly',
         ];
     }
 

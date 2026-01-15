@@ -4,6 +4,13 @@
 @section('meta_description', 'Learn about Custom Premium Boxes - your trusted partner for premium custom packaging solutions. Quality, innovation, and customer satisfaction since 2010.')
 @section('meta_keywords', 'about custom premium boxes, packaging company, custom packaging manufacturer, box printing company')
 
+@php
+$breadcrumbs = [
+    ['label' => 'Home', 'url' => route('home')],
+    ['label' => 'About', 'url' => route('about')],
+];
+@endphp
+
 @section('content')
     {{-- Hero Section --}}
     <section class="bg-dark py-20 lg:py-32 relative overflow-hidden">

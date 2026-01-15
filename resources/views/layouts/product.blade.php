@@ -33,13 +33,6 @@
             <div class="grid lg:grid-cols-2 gap-12 items-center">
                 {{-- Content --}}
                 <div class="text-center lg:text-left">
-                    <nav class="mb-6 opacity-0 animate-fade-in" aria-label="Breadcrumb">
-                        <ol class="flex items-center justify-center lg:justify-start space-x-2 text-sm">
-                            <li><a href="{{ route('home') }}" class="text-light-muted hover:text-primary transition-colors">Home</a></li>
-                            <li><span class="text-light-muted">/</span></li>
-                            <li><span class="text-primary">{{ $title }}</span></li>
-                        </ol>
-                    </nav>
                     
                     <span class="inline-block text-primary font-semibold tracking-widest text-sm mb-4 opacity-0 animate-fade-in animation-delay-100">
                         {{ $subtitle }}

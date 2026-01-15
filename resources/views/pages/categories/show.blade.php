@@ -14,13 +14,6 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid lg:grid-cols-2 gap-12 items-center">
                 <div>
-                    <nav class="flex items-center gap-2 text-light-muted text-sm mb-6">
-                        <a href="{{ route('home') }}" class="hover:text-primary transition-colors">Home</a>
-                        <span>/</span>
-                        <a href="{{ route('categories.index') }}" class="hover:text-primary transition-colors">Categories</a>
-                        <span>/</span>
-                        <span class="text-light">{{ $category->name }}</span>
-                    </nav>
                     <h1 class="font-display text-4xl md:text-6xl text-light tracking-wide mb-6">
                         {{ strtoupper($category->name) }}
                     </h1>
@@ -30,10 +23,10 @@
                     </p>
                     @endif
                 </div>
-                @if($category->image)
+                @if($category->image_url)
                 <div class="relative">
                     <div class="aspect-square bg-dark-soft rounded-lg overflow-hidden">
-                        <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}" class="w-full h-full object-cover">
+                        <img src="{{ $category->image_url }}" alt="{{ $category->name }}" class="w-full h-full object-cover">
                     </div>
                 </div>
                 @endif
@@ -55,9 +48,9 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 @foreach($products as $index => $product)
                 <a href="{{ route('products.show', $product->slug) }}" class="group bg-light-soft border-2 border-light-muted hover:border-primary transition-all duration-300 card-hover reveal animation-delay-{{ ($index % 4) * 100 }}">
-                    @if($product->image)
+                    @if($product->image_url)
                     <div class="w-full h-64 bg-light-soft overflow-hidden">
-                        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
                     </div>
                     @else
                     <div class="w-full h-64 bg-dark flex items-center justify-center">

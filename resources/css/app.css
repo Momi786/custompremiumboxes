@@ -163,3 +163,62 @@
             right: auto !important;
         }
     }
+
+/* Brand Slider Styles */
+.brand-slider-container {
+    position: relative;
+    width: 100%;
+    mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        black 10%,
+        black 90%,
+        transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        black 10%,
+        black 90%,
+        transparent 100%
+    );
+}
+
+.brand-slider-track {
+    display: flex;
+    animation: brand-slide 30s linear infinite;
+    will-change: transform;
+}
+
+.brand-slider-track:hover {
+    animation-play-state: paused;
+}
+
+.brand-slide {
+    min-width: 150px;
+    padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+    .brand-slide {
+        min-width: 200px;
+    }
+}
+
+.brand-logo-link {
+    display: block;
+    text-decoration: none;
+}
+
+.brand-logo-wrapper img {
+    transition: all 0.3s ease;
+}
+
+@keyframes brand-slide {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}

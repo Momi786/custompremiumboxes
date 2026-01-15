@@ -74,6 +74,11 @@
     {{-- Navigation --}}
     @include('partials.navigation')
 
+    {{-- Breadcrumbs --}}
+    @if(isset($breadcrumbs) && count($breadcrumbs) > 0)
+        <x-breadcrumbs :items="$breadcrumbs" />
+    @endif
+
     {{-- Main Content --}}
     <main id="main-content">
         @yield('content')

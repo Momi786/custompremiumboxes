@@ -73,7 +73,7 @@ class Product extends Model
      */
     public function getImageUrlAttribute(): ?string
     {
-        if (!$this->image) {
+        if (! $this->image) {
             return null;
         }
 
@@ -82,7 +82,7 @@ class Product extends Model
             return $this->image;
         }
 
-        // Use Storage::url() for files in storage
-        return \Illuminate\Support\Facades\Storage::url($this->image);
+        // Use asset() for files in public storage (works with storage link)
+        return asset('storage/'.$this->image);
     }
 }
